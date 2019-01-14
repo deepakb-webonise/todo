@@ -6,7 +6,9 @@ export default class TotoItemComponent extends Component {
       <div>
         <span>{this.props.todo.id}</span>
         <span>{this.props.todo.description}</span>
-        <span>edit</span>
+        <span onClick={this.props.onEditTodo.bind(null, this.props.todo)}>
+          edit
+        </span>
         <span>delete</span>
       </div>
     );
