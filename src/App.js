@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import AddTodoCommponent from "./AddTodoComponent";
 import TodoListComponent from "./TodoListComponent";
-import { addTodo } from "./actions/index";
+import { saveTodo, getTodos } from "./actions/index";
+import "./App.css";
 class App extends Component {
   id = 0;
   constructor(props) {
@@ -17,6 +18,9 @@ class App extends Component {
     //this.onAddTodo = this.onAddTodo.bind(this);
     this.setValue = this.setValue.bind(this);
     this.onEditTodo = this.onEditTodo.bind(this);
+  }
+  componentDidMount() {
+    this.props.loadTodos();
   }
   setValue(event) {
     let desc = event.target.value;
@@ -62,10 +66,7 @@ class App extends Component {
           isUpdate={this.state.isUpdate}
           setValue={this.setValue}
         />
-        <TodoListComponent
-          todos={this.state.todos}
-          onEditTodo={this.onEditTodo}
-        />
+        <TodoListComponent onEditTodo={this.onEditTodo} />
       </div>
     );
   }
@@ -73,7 +74,8 @@ class App extends Component {
 
 const mapStateToProps = state => ({});
 const mapDispatchToProps = dispatch => ({
-  addTodo: text => dispatch(addTodo(text))
+  addTodo: text => dispatch(saveTodo(text)),
+  loadTodos: () => dispatch(getTodos())
 });
 
 export default connect(
