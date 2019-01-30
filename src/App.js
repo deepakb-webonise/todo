@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import AddTodoCommponent from "./AddTodoComponent";
 import TodoListComponent from "./TodoListComponent";
+import { addTodo } from "./actions/index";
 class App extends Component {
   id = 0;
   constructor(props) {
@@ -12,7 +14,7 @@ class App extends Component {
       isUpdate: false
     };
 
-    this.onAddTodo = this.onAddTodo.bind(this);
+    //this.onAddTodo = this.onAddTodo.bind(this);
     this.setValue = this.setValue.bind(this);
     this.onEditTodo = this.onEditTodo.bind(this);
   }
@@ -22,7 +24,7 @@ class App extends Component {
       description: desc
     });
   }
-  onAddTodo(desctipion) {
+  onAddTodo = desctipion => {
     let isUpdate = this.state.isUpdate;
     let todos = this.state.todos;
     if (isUpdate) {
@@ -36,22 +38,17 @@ class App extends Component {
       });
       //update the state
     } else {
-      let id = ++this.id;
-      let todoObj = {
-        id: id,
-        description: desctipion
-      };
-      todos = todos.concat(todoObj);
+      this.props.addTodo(desctipion);
     }
     this.setState({
       todos: todos,
       description: "",
       isUpdate: false
     });
-  }
+  };
   onEditTodo(todo) {
     this.setState({
-      description: todo.description,
+      description: todo.text,
       isUpdate: true,
       todoId: todo.id
     });
@@ -74,4 +71,12 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => ({});
+const mapDispatchToProps = dispatch => ({
+  addTodo: text => dispatch(addTodo(text))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

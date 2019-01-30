@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import TodoItemComponent from "./TodoItemComponent";
-export default class TotoListComponent extends Component {
+import { connect } from "react-redux";
+class TotoListComponent extends Component {
   render() {
     let listOfTodos = this.props.todos.map(todo => {
       return (
@@ -14,3 +15,11 @@ export default class TotoListComponent extends Component {
     return <div>{listOfTodos}</div>;
   }
 }
+const mapStateToProps = state => ({
+  todos: state.todos
+});
+const mapDispatchToProps = dispatch => ({});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TotoListComponent);

@@ -5,7 +5,7 @@ export default class TotoItemComponent extends Component {
     return (
       <div>
         <span>{this.props.todo.id}</span>
-        <span>{this.props.todo.description}</span>
+        <span>{this.props.todo.text}</span>
         <span onClick={this.props.onEditTodo.bind(null, this.props.todo)}>
           edit
         </span>
